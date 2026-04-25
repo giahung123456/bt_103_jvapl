@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Tạo Ghi chú Mới</h1>
+<form th:action="@{/todos/add}" th:object="${todo}" method="post">
+    <div>
+        <label>Nội dung:</label>
+        <input type="text" th:field="*{content}" />
+        <p style="color:red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+    </div>
+
+    <div>
+        <label>Hạn chót:</label>
+        <input type="date" th:field="*{dueDate}" />
+        <p style="color:red" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
+    </div>
+
+    <div>
+        <label>Mức độ:</label>
+        <select th:field="*{priority}">
+            <option value="Cao">Cao</option>
+            <option value="Thường">Thường</option>
+        </select>
+    </div>
+
+    <button type="submit">Lưu lại</button>
+    <a th:href="@{/todos}">Hủy bỏ</a>
+</form>
+</body>
+</html>

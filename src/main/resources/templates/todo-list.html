@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Danh sách Công việc</h1>
+<a th:href="@{/todos/add}">+ Thêm công việc mới</a>
+
+<table border="1" style="margin-top: 10px;">
+    <thead>
+    <tr>
+        <th>Nội dung</th>
+        <th>Hạn chót</th>
+        <th>Ưu tiên</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${todos}">
+        <td th:text="${t.content}"></td>
+        <td th:text="${t.dueDate}"></td>
+        <td th:text="${t.priority}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
