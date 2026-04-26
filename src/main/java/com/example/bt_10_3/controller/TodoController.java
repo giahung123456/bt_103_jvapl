@@ -37,7 +37,7 @@ public class TodoController {
             return "todo-form";
         }
         todoRepository.save(todo);
-        ra.addFlashAttribute("message", "Lưu dữ liệu thành công!"); // Flash Attribute (20đ)
+        ra.addFlashAttribute("message", "Lưu dữ liệu thành công!");
         return "redirect:/todos";
     }
 
