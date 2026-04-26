@@ -14,6 +14,7 @@
         <th>Nội dung</th>
         <th>Hạn chót</th>
         <th>Ưu tiên</th>
+        <th>Thao tác</th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +22,16 @@
         <td th:text="${t.content}"></td>
         <td th:text="${t.dueDate}"></td>
         <td th:text="${t.priority}"></td>
+        <td>
+            <a th:href="@{/todos/edit/{id}(id=${t.id})}">Sửa</a> |
+
+            <a th:href="@{/todos/delete/{id}(id=${t.id})}"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
+        </td>
     </tr>
+    <div th:if="${message}" style="color: blue; font-weight: bold;">
+        <p th:text="${message}"></p>
+    </div>
     </tbody>
 </table>
 </body>

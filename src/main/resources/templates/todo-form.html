@@ -7,6 +7,7 @@
 <body>
 <h1>Tạo Ghi chú Mới</h1>
 <form th:action="@{/todos/add}" th:object="${todo}" method="post">
+    <input type="hidden" th:field="*{id}" />
     <div>
         <label>Nội dung:</label>
         <input type="text" th:field="*{content}" />
@@ -27,7 +28,7 @@
         </select>
     </div>
 
-    <button type="submit">Lưu lại</button>
+    <button type="submit" th:text="${todo.id == null ? 'Thêm mới' : 'Cập nhật'}"></button>
     <a th:href="@{/todos}">Hủy bỏ</a>
 </form>
 </body>

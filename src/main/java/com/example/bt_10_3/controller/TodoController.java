@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/todos")
@@ -33,11 +31,33 @@ public class TodoController {
 
     @PostMapping("/add")
     public String saveTodo(@Valid @ModelAttribute("todo") Todo todo,
-                           BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+                           BindingResult result,
+                           RedirectAttributes ra) {
+        if (result.hasErrors()) {
             return "todo-form";
         }
         todoRepository.save(todo);
+        ra.addFlashAttribute("message", "Lưu dữ liệu thành công!"); // Flash Attribute (20đ)
+        return "redirect:/todos";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID không tồn tại: " + id));
+
+        model.addAttribute("todo", todo);
+        return "todo-form";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteTodo(@PathVariable("id") Long id, RedirectAttributes ra) {
+        if (todoRepository.existsById(id)) {
+            todoRepository.deleteById(id);
+            ra.addFlashAttribute("message", "Đã xóa công việc thành công!");
+        } else {
+            ra.addFlashAttribute("message", "Lỗi: Không tìm thấy ID để xóa!");
+        }
         return "redirect:/todos";
     }
 }
