@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Chào mừng bạn đến với Todo App</h1>
+<form th:action="@{/todos/login}" method="post">
+    <label>Nhập tên của bạn:</label>
+    <input type="text" name="ownerName" required />
+    <button type="submit">Bắt đầu</button>
+</form>
+</body>
+</html>

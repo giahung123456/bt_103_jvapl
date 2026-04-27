@@ -7,14 +7,22 @@
 <body>
 <h1>Danh sách Công việc</h1>
 <a th:href="@{/todos/add}">+ Thêm công việc mới</a>
+<div style="display: flex; justify-content: space-between;">
+    <h2 th:text="#{todo.title} + ' ' + ${session.ownerName}"></h2>
+
+    <div>
+        <a href="?lang=vi">Tiếng Việt</a> |
+        <a href="?lang=en">English</a>
+    </div>
+</div>
 
 <table border="1" style="margin-top: 10px;">
     <thead>
     <tr>
-        <th>Nội dung</th>
-        <th>Hạn chót</th>
-        <th>Ưu tiên</th>
-        <th>Thao tác</th>
+        <th th:text="#{todo.content}">Nội dung</th>
+        <th th:text="#{todo.dueDate}">Hạn chót</th>
+        <th th:text="#{todo.priority}">Ưu tiên</th>
+        <th th:text="#{todo.action}">Thao tác</th>
     </tr>
     </thead>
     <tbody>
@@ -23,16 +31,43 @@
         <td th:text="${t.dueDate}"></td>
         <td th:text="${t.priority}"></td>
         <td>
-            <a th:href="@{/todos/edit/{id}(id=${t.id})}">Sửa</a> |
-
+            <a th:href="@{/todos/edit/{id}(id=${t.id})}" th:text="#{todo.edit}">Sửa</a> |
             <a th:href="@{/todos/delete/{id}(id=${t.id})}"
+               th:text="#{todo.delete}"
                onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
         </td>
     </tr>
-    <div th:if="${message}" style="color: blue; font-weight: bold;">
-        <p th:text="${message}"></p>
-    </div>
     </tbody>
 </table>
+<!--<table border="1" style="margin-top: 10px;">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Nội dung</th>-->
+<!--        <th>Hạn chót</th>-->
+<!--        <th>Ưu tiên</th>-->
+<!--        <th>Thao tác</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="t : ${todos}">-->
+<!--        <td th:text="${t.content}"></td>-->
+<!--        <td th:text="${t.dueDate}"></td>-->
+<!--        <td th:text="${t.priority}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/todos/edit/{id}(id=${t.id})}">Sửa</a> |-->
+
+<!--            <a th:href="@{/todos/delete/{id}(id=${t.id})}"-->
+<!--               onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    <div th:if="${message}" style="color: blue; font-weight: bold;">-->
+<!--        <p th:text="${message}"></p>-->
+<!--    </div>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<div th:if="${message}" style="color: blue; font-weight: bold;">
+    <p th:text="${message}"></p>
+</div>
 </body>
 </html>

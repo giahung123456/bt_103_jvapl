@@ -2,6 +2,7 @@ package com.example.bt_10_3.controller;
 
 import com.example.bt_10_3.entity.Todo;
 import com.example.bt_10_3.repository.TodoRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,11 @@ public class TodoController {
     private TodoRepository todoRepository;
 
     @GetMapping
-    public String listTodos(Model model) {
+    public String listTodos(Model model, HttpSession session) {
+        String owner = (String) session.getAttribute("ownerName");
+        if (owner == null) {
+            return "redirect:/todos/login";
+        }
         model.addAttribute("todos", todoRepository.findAll());
         return "todo-list";
     }
@@ -60,4 +65,18 @@ public class TodoController {
         }
         return "redirect:/todos";
     }
+    @GetMapping("/login")
+    public String showLogin() {
+        return "welcome";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("ownerName") String name, HttpSession session) {
+        if (name == null || name.trim().isEmpty()) {
+            return "redirect:/todos/login";
+        }
+        session.setAttribute("ownerName", name);
+        return "redirect:/todos";
+    }
+
 }
